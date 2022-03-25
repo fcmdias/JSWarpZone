@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <style>
+
+        </style>
+    </head>
+
+
+
+    <body>
+        
+
+
+
+        <p id="username"></p>
+
+        <script>
+            
+
+
+
+            let username = document.getElementById('username');
+
+            fetch('https://api.github.com/users/fcmdias')
+                .then((response) => {
+                    return response.json()
+                })
+                .then((data) => {
+                    console.log(data)
+                    console.log("the login value is", data.login)
+                    username.innerHTML = `${data.login}`;
+
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+
+        </script>
+    </body>
+
+
+</html>
