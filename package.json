@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "global-fetch": "^0.2.2"
+  }
+}
