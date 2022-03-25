@@ -12,23 +12,33 @@
 
 
 
-        <p id="username"></p>
-
+        <div id="github_info"></div>
         <script>
+
+
+
             
+            
+            let github_info = document.getElementById('github_info');
+
+            let github_info_title = document.createElement('h2');
+            github_info_title.innerHTML = "GitHub";
+            github_info.appendChild(github_info_title);
 
 
-
-            let username = document.getElementById('username');
-
+            
             fetch('https://api.github.com/users/fcmdias')
-                .then((response) => {
-                    return response.json()
-                })
-                .then((data) => {
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
                     console.log(data)
-                    console.log("the login value is", data.login)
-                    username.innerHTML = `${data.login}`;
+                    
+                    
+                    let login = document.createElement('A');
+                    login.innerHTML = `${data.login}`;
+                    login.setAttribute("href", `${data.html_url}`);
+                    github_info.appendChild(login);
 
                 })
                 .catch((error) => {

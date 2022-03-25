@@ -1,0 +1,86 @@
+<html>
+    <body>
+
+        <input type="text" id="text">
+        <p>Click inside the text box and press the down arrow key to move the cheese down.</p>
+        <p>Don't let the mouse move over the cheese, it's a trap.</p>
+        
+
+        <div style="height: 100px; width: 100px; background-color: yellow;" id="cheese">Cheese</div>
+
+        <script>
+
+
+                // Function to modify the text content of the paragraph
+                const trap = () => {
+                    const p = document.getElementById('cheese');
+                    p.textContent = "Got you";
+                }
+
+
+                const movecheesedown = (event) => {
+                    
+
+                    console.log("event.keyCode: ", event.keyCode)
+                    console.log("movecheesedown() start..")
+                    const p = document.getElementById('cheese');
+
+                    let v = p.style.marginTop
+                    
+                    let i = v.lastIndexOf("px")
+                    if (i != -1) {
+                        v = v.slice(0, i);
+                        console.log("after slicing v:",v)
+                    }
+                    switch (event.keyCode) {
+                        case 40: 
+                            v = Number(v) + 10
+                            break;
+
+                        case 38:
+                            if (v > 10) {
+                                v = Number(v) - 10
+                                p.style.marginTop = String(v) + "px"
+                            }
+                            break;
+                            
+                        }
+                        
+                    p.style.marginTop = String(v) + "px"
+
+                    
+
+
+                }
+
+                // const movecheeseup = (event) => {
+                    
+                //     console.log("movecheeseup() start..")
+                //     console.log("event.keyCode: ", event.keyCode)
+                //     const p = document.getElementById('cheese');
+
+                //     let v = p.style.marginTop
+                    
+                //     let i = v.lastIndexOf("px")
+                //     if (i != -1) {
+                //         v = v.slice(0, i);
+                //         console.log("after slicing v:",v)
+                //     }
+                    
+                //     if (v > 0) {
+                //         v = Number(v) - 10
+                //         p.style.marginTop = String(v) + "px"
+                //     }
+
+
+                // }
+
+            const cheese = document.getElementById('cheese');
+            cheese.addEventListener('mouseover', trap);
+            const text = document.getElementById('text');
+            text.addEventListener('keydown', movecheesedown);
+            // text.addEventListener('keyup', movecheeseup);
+
+        </script>
+    </body>
+</html>
