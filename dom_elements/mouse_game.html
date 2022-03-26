@@ -2,7 +2,7 @@
     <body>
 
         <input type="text" id="text">
-        <p>Press the down or up arrow key to move the cheese.</p>
+        <p>Use the arrow keys to move the cheese around the page.</p>
         <p>Don't let the mouse move over the cheese, it's a trap.</p>
         
 
@@ -17,34 +17,80 @@
                 }
 
 
-                const movecheese = (event) => {
 
-                    const p = document.getElementById('cheese');
+                const removepxstring = (v) => {
 
-                    let v = p.style.marginTop
-                    
                     let i = v.lastIndexOf("px")
                     if (i != -1) {
                         v = v.slice(0, i);
+                    } else {
+                        v = 0
                     }
-                    switch (event.keyCode) {
-                        case 40: 
-                            v = Number(v) + 10
-                            break;
 
-                        case 38:
+                    v = Number(v)
+
+                    return v
+
+                }
+
+                const xaxis = (position0, dir) => {
+
+                    let v = removepxstring(position0)
+
+
+                    switch (dir) {
+                        case 39: 
+                            v = v + 10
+                            break;
+                        case 37: 
                             if (v > 10) {
-                                v = Number(v) - 10
-                                p.style.marginTop = String(v) + "px"
+                                v = v - 10
                             }
                             break;
-                            
-                        }
-                        
-                    p.style.marginTop = String(v) + "px"
+                    }
 
+
+                    v = String(v) + "px"
+
+                    return v
+
+                }
+                const yaxis = (position0, dir) => {
+
+                    let v = removepxstring(position0)
+
+
+                    switch (dir) {
+                        case 40: 
+                            v = v + 10
+                            break;
+                        case 38: 
+                            if (v > 10) {
+                                v = v - 10
+                            }
+                            break;
+                    }
+
+
+                    v = String(v) + "px"
+
+                    return v
+
+                }
+
+
+                const movecheese = (event) => {
                     
+                    const p = document.getElementById('cheese');
+                    let key = event.keyCode
 
+                     if (key == 37 || key == 39) {
+                        p.style.marginLeft = xaxis(p.style.marginLeft, key)
+                         
+                    } else if (key == 38 || key == 40 ) {
+                        p.style.marginTop = yaxis(p.style.marginTop, key)
+                         
+                    }
 
                 }
 

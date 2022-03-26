@@ -32,18 +32,18 @@
                 return response.json()
             })
             .then((data) => {
-                    console.log(data)
-                    
-                    
-                    let login = document.createElement('A');
-                    login.innerHTML = `${data.login}`;
-                    login.setAttribute("href", `${data.html_url}`);
-                    github_info.appendChild(login);
+                console.log(data)
+                
+                
+                let login = document.createElement('A');
+                login.innerHTML = `${data.login}`;
+                login.setAttribute("href", `${data.html_url}`);
+                github_info.appendChild(login);
 
-                })
-                .catch((error) => {
-                    console.error(error)
-                })
+            })
+            .catch((error) => {
+                console.error(error)
+            })
 
         </script>
     </body>
