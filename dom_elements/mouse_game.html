@@ -7,6 +7,25 @@
                 margin: 0;
                 padding: 0;
             }
+
+            #playground {
+                width: 500px;
+                height: 500px;
+                border: 1px solid black;
+                position: relative;
+            }
+            #message {
+                width: 50%;
+                margin-left: 25%;
+                height: 200px;
+                margin-top: 150px;
+                background-color: aliceblue;
+                position: absolute;
+                text-align: center;
+                display: none
+                
+
+            }
             #cheese {
                 top: 150px;
                 left: 190px;
@@ -16,18 +35,36 @@
                 background-color: yellow;
                 border: black 1px solid;
             }
+            #mouse {
+                height: 100px; 
+                width: 100px; 
+                background-color: grey; 
+                margin-top:0; 
+                position: absolute; 
+                top:0px; 
+                text-align: center;
+            }
         </style>
     </head>
     <body>
 
-
-        <div id="cheese"></div>
-
+        
         <p>Use the arrow keys to move the mouse around the page.</p>
         <p>Don't let the mouse touch the block of cheese</p>
         
-
-        <div style="height: 100px; width: 100px; background-color: grey; margin-top:0; position: absolute; top:0px; text-align: center;" id="mouse">Mouse</div>
+        
+        <div id="playground">
+            <div id="cheese"></div>
+            <div id="mouse">Mouse</div>
+            <div id="message">
+                <h2>Game Over!</h2>
+                <button id="restart-button">Restart</button>
+            </div>
+        </div>
+        
+        
+        
+        
 
         <script>
 
@@ -37,11 +74,29 @@
                 let trapped = false
 
                 const trap = () => {
+                    trapped = true;
                     const p = document.getElementById('mouse');
                     p.textContent = "Caught";
                     p.style.color= "white";
-                    trapped = true;
+
+                    const message = document.getElementById('message');
+                    message.style.display = "block";
                 }
+
+                const restart = () => {
+                    trapped = false;
+                    const mouse = document.getElementById('mouse');
+                    mouse.style.marginLeft = 0;
+                    mouse.style.marginTop = 0;
+                    mouse.innerHTML = "Mouse";
+                    mouse.style.color= "black";
+
+                    const message = document.getElementById('message');
+                    message.style.display = "none";
+                }
+
+                const restartButton = document.getElementById('restart-button');
+                restartButton.addEventListener("click", restart)
 
 
 
