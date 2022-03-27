@@ -1,19 +1,46 @@
 <html>
+
+    <head>
+        <style>
+
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            #cheese {
+                top: 150px;
+                left: 190px;
+                position: absolute;
+                width: 30px;
+                height: 30px;
+                background-color: yellow;
+                border: black 1px solid;
+            }
+        </style>
+    </head>
     <body>
 
-        <input type="text" id="text">
-        <p>Use the arrow keys to move the cheese around the page.</p>
-        <p>Don't let the mouse move over the cheese, it's a trap.</p>
+
+        <div id="cheese"></div>
+
+        <p>Use the arrow keys to move the mouse around the page.</p>
+        <p>Don't let the mouse touch the block of cheese</p>
         
 
-        <div style="height: 100px; width: 100px; background-color: yellow;" id="cheese">Cheese</div>
+        <div style="height: 100px; width: 100px; background-color: grey; margin-top:0; position: absolute; top:0px; text-align: center;" id="mouse">Mouse</div>
 
         <script>
 
 
+
+
+                let trapped = false
+
                 const trap = () => {
-                    const p = document.getElementById('cheese');
-                    p.textContent = "Got you";
+                    const p = document.getElementById('mouse');
+                    p.textContent = "Caught";
+                    p.style.color= "white";
+                    trapped = true;
                 }
 
 
@@ -79,28 +106,38 @@
                 }
 
 
-                const movecheese = (event) => {
-                    
-                    const p = document.getElementById('cheese');
-                    let key = event.keyCode
+                const movemouse = (event) => {
 
-                     if (key == 37 || key == 39) {
+                    if (trapped) {
+                        return 
+                    }
+                    
+                    const p = document.getElementById('mouse');
+                    let key = event.keyCode
+                    
+                    if (key == 37 || key == 39) {
                         p.style.marginLeft = xaxis(p.style.marginLeft, key)
-                         
+                        
                     } else if (key == 38 || key == 40 ) {
                         p.style.marginTop = yaxis(p.style.marginTop, key)
-                         
+
                     }
+                    
+                    let cheeseRect = document.getElementById('cheese').getBoundingClientRect();
+                    let mouseRect = p.getBoundingClientRect();
 
+                    if ((mouseRect.bottom > cheeseRect.top) &
+                     (mouseRect.top < cheeseRect.bottom) & 
+                     (mouseRect.right > cheeseRect.left) & 
+                     (mouseRect.left < cheeseRect.right)
+                     ) {
+                        trap()
+                    }
                 }
-
-
-            const cheese = document.getElementById('cheese');
-            cheese.addEventListener('mouseover', trap);
             
             
             const body = document.getElementsByTagName("BODY")[0];
-            body.addEventListener('keydown', movecheese);
+            body.addEventListener('keydown', movemouse);
 
         </script>
     </body>
