@@ -19,7 +19,7 @@
                 margin-left: 25%;
                 height: 200px;
                 margin-top: 150px;
-                background-color: aliceblue;
+                background-color: red;
                 position: absolute;
                 text-align: center;
                 display: none
@@ -76,7 +76,6 @@
                 const trap = () => {
                     trapped = true;
                     const p = document.getElementById('mouse');
-                    p.textContent = "Caught";
                     p.style.color= "white";
 
                     const message = document.getElementById('message');
@@ -88,7 +87,6 @@
                     const mouse = document.getElementById('mouse');
                     mouse.style.marginLeft = 0;
                     mouse.style.marginTop = 0;
-                    mouse.innerHTML = "Mouse";
                     mouse.style.color= "black";
 
                     const message = document.getElementById('message');
