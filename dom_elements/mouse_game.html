@@ -36,8 +36,8 @@
                 border: black 1px solid;
             }
             #mouse {
-                height: 100px; 
-                width: 100px; 
+                height: 70px; 
+                width: 70px; 
                 background-color: grey; 
                 margin-top:0; 
                 position: absolute; 
@@ -69,9 +69,83 @@
         <script>
 
 
+            let trapped = false;
+            let gkey = 0;
+            let mouseSize = 70;
+            let frameSize = 500;
+            let stepSize = 5;
+            let speed = 10;
+            // let speedTime = (stepSize / speed) * 100
+            let speedPeriod = 20
 
 
-                let trapped = false
+            class Object
+            {
+
+                render()
+                {
+                    //
+                }
+
+                move() 
+                {
+                    var myInterval = setInterval(function() {
+
+                        if (trapped) {
+                            return;
+                        }
+                        let el = document.getElementById('mouse');
+                        console.log("logging")
+
+                        if (gkey == 39 || gkey == 37 ) { 
+                            el.style.marginLeft = xaxis(el.style.marginLeft, gkey)
+                        } else if (gkey == 38 || gkey == 40 ) {
+                            el.style.marginTop = yaxis(el.style.marginTop, gkey)
+                        }
+                    }, speedPeriod);
+                }
+                
+                
+            }
+
+            class Wall 
+            {
+                constructor(width, top, left) {
+                    this.width = width;
+                    this.left = left;
+                    this.top = top;
+                }
+                render() {
+                    const playground = document.getElementById("playground");
+                    let wall = document.createElement('div');
+                    wall.style.width = String(this.width) + "px";
+                    wall.style.backgroundColor = "black";
+                    wall.style.height= "10px";
+                    wall.style.top= String(this.top) + "px";
+                    wall.style.left= String(this.left) + "px";
+                    wall.style.position= "absolute";
+
+                    playground.appendChild(wall);
+                }
+            }
+
+
+            // new Wall(300, 100, 100).render();
+            // new Wall(300, 200, 100).render();
+            // new Wall(100, 200, 400).render();
+
+
+            let obj = new Object();
+            obj.render();
+            
+            
+            obj.move();
+            
+            
+
+
+            
+
 
                 const trap = () => {
                     trapped = true;
@@ -100,31 +174,34 @@
 
                 const removepxstring = (v) => {
 
-                    let i = v.lastIndexOf("px")
+                    let i = v.lastIndexOf("px");
                     if (i != -1) {
                         v = v.slice(0, i);
                     } else {
-                        v = 0
-                    }
+                        v = 0;
+                    };
 
-                    v = Number(v)
+                    v = Number(v);
 
-                    return v
+                    return v;
 
                 }
 
                 const xaxis = (position0, dir) => {
 
-                    let v = removepxstring(position0)
+                    let v = removepxstring(position0);
 
 
                     switch (dir) {
                         case 39: 
-                            v = v + 10
+                        if (v == frameSize - mouseSize) {
+                            return;
+                        }
+                            v = v + stepSize;
                             break;
                         case 37: 
-                            if (v > 10) {
-                                v = v - 10
+                            if (v > 0) {
+                                v = v - stepSize;
                             }
                             break;
                     }
@@ -141,16 +218,17 @@
 
 
                     switch (dir) {
-                        case 40: 
-                            v = v + 10
+                        case 40:
+                            if ( v < frameSize-mouseSize ) {
+                                v = v + stepSize
+                            }
                             break;
-                        case 38: 
-                            if (v > 10) {
-                                v = v - 10
+                        case 38:
+                            if (v > 0) {
+                                v = v - stepSize
                             }
                             break;
                     }
-
 
                     v = String(v) + "px"
 
@@ -167,6 +245,7 @@
                     
                     const p = document.getElementById('mouse');
                     let key = event.keyCode
+                    gkey = event.keyCode
                     
                     if (key == 37 || key == 39) {
                         p.style.marginLeft = xaxis(p.style.marginLeft, key)
