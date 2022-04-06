@@ -36,8 +36,8 @@
                 border: black 1px solid;
             }
             #mouse {
-                height: 70px; 
-                width: 70px; 
+                height: 30px; 
+                width: 30px; 
                 background-color: grey; 
                 margin-top:0; 
                 position: absolute; 
@@ -71,12 +71,13 @@
 
             let trapped = false;
             let gkey = 0;
-            let mouseSize = 70;
+            let mouseSize = 30;
             let frameSize = 500;
             let stepSize = 5;
             let speed = 10;
             // let speedTime = (stepSize / speed) * 100
-            let speedPeriod = 20
+            let speedPeriod = 50;
+            let wallWidth = 1;
 
 
             class Object
@@ -110,29 +111,102 @@
 
             class Wall 
             {
-                constructor(width, top, left) {
+                constructor(width, top, left, rot) {
                     this.width = width;
                     this.left = left;
                     this.top = top;
+                    this.rot = rot;
                 }
                 render() {
                     const playground = document.getElementById("playground");
                     let wall = document.createElement('div');
                     wall.style.width = String(this.width) + "px";
                     wall.style.backgroundColor = "black";
-                    wall.style.height= "10px";
+                    wall.style.height= wallWidth +  "px";
                     wall.style.top= String(this.top) + "px";
                     wall.style.left= String(this.left) + "px";
                     wall.style.position= "absolute";
+                    wall.style.transform= "rotate(" + String(this.rot) + "deg)";
 
                     playground.appendChild(wall);
                 }
             }
 
+            class YWall 
+            {
+                constructor(left) {
+                    this.left = left;
+                }
+                render() {
+                    const playground = document.getElementById("playground");
+                    let wall = document.createElement('div');
+                    wall.style.backgroundColor = "black";
+                    wall.style.width= String(wallWidth) +  "px";
+                    wall.style.height= String(frameSize) +  "px";
+                    wall.style.left = String(this.left) + "px";
+                    
+
+                    wall.style.position= "absolute";                    
+
+                    playground.appendChild(wall);
+                }
+            }
+            class XWall 
+            {
+                constructor(top) {
+                    this.top = top;
+                }
+                render() {
+                    const playground = document.getElementById("playground");
+                    let wall = document.createElement('div');
+                    wall.style.backgroundColor = "black";
+                    wall.style.height= String(wallWidth) +  "px";
+                    wall.style.width= String(frameSize) +  "px";
+                    wall.style.top = String(this.top) + "px";
+                    
+
+                    wall.style.position= "absolute";                    
+
+                    playground.appendChild(wall);
+                }
+            }
+
+            
+            let frameDivisions = 10;
+
+            for (let i = 0; i < 10; i++) {
+                new YWall((i /frameDivisions)*frameSize).render()
+                new XWall((i /frameDivisions)*frameSize).render()
+            }
+            
+
+
+            // let walls = [
+            //     //first level
+            //     [ (1/10)*frameSize, frameSize*(1/10), 0,0],
+            //     [ (6/10)*frameSize, frameSize*(1/10), frameSize*(2/10),0],
+            //     //second layer
+            //     [ (4/10)*frameSize, frameSize*(2/10), frameSize*(2/10), 0 ],
+            //     [ (2/10)*frameSize, frameSize*(2/10), frameSize*(8/10), 0 ],
+            //     //third level
+            //     [ (4/10)*frameSize, (3/10)*frameSize, (4/10)*frameSize, 0],
+            //     [ (3/10)*frameSize, (3/10)*frameSize, 0, 0],
+                
+                
+            //     // horizontal 
+            //     [200,300,0,90]
+            // ]
+
+            // walls.map(wall => new Wall(wall[0],wall[1],wall[2],wall[3]).render())
 
             // new Wall(300, 100, 100).render();
-            // new Wall(300, 200, 100).render();
+            // new Wall(200, 200, 100).render();
             // new Wall(100, 200, 400).render();
+            // new Wall(200, 300, 0, 90).render();
+
+
+
+            // new Wall(200, 295, 0, 90).render();
 
 
             let obj = new Object();
