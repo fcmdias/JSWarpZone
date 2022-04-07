@@ -103,6 +103,8 @@
                         } else if (gkey == 38 || gkey == 40 ) {
                             el.style.marginTop = yaxis(el.style.marginTop, gkey)
                         }
+
+                        checkTrap()
                     }, speedPeriod);
                 }
                 
@@ -329,6 +331,13 @@
 
                     }
                     
+                    checkTrap()
+                }
+
+                const checkTrap = () => {
+
+
+                    const p = document.getElementById('mouse');
                     let cheeseRect = document.getElementById('cheese').getBoundingClientRect();
                     let mouseRect = p.getBoundingClientRect();
 
