@@ -1,5 +1,8 @@
 // decorator facilitates the addition of behaviors to individual objects without inheriting from them
 
+// a decorator keeps the reference to the decorated objects
+// adds utility fields and methods to augment the object's features
+
 class Shape{} 
 
 class Circle extends Shape 
